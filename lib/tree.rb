@@ -85,6 +85,38 @@ class Tree
     end
   end
 
+  def level_order_recursive(node = @root, &block)
+    if block_given?
+      yield node
+      level_order_recursive(node.left, &block) if node.left
+      level_order_recursive(node.right, &block) if node.right
+    else
+      array = []
+      array << node.data
+      level_order_recursive(node.left) { |node| array << node.data } if node.left
+      level_order_recursive(node.right) { |node| array << node.data } if node.right
+      array
+    end
+  end
+
+  def level_order_iteration
+    return [] if @root.nil?
+
+    queue = [@root]
+    result = []
+
+    until queue.empty?
+      node = queue.shift
+
+      block_given? ? yield(node) : result << node.data
+
+      queue << node.left if node.left
+      queue << node.right if node.right
+    end
+
+    result unless block_given?
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"

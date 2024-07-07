@@ -20,3 +20,10 @@ test.delete(55)
 test.pretty_print
 p test.find(55)
 p test.find(54)
+
+test.level_order_recursive { |e| puts "this is #{e.data}" }
+
+p test.level_order_recursive
+
+test.level_order_iteration { |e| puts "this is #{e.data} iteration" }
+p test.level_order_iteration
