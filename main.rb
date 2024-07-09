@@ -21,12 +21,14 @@ test.pretty_print
 p test.find(55)
 p test.find(54)
 
-test.inorder { |e| puts "this is inorder #{e.data} recursive" }
+# test.inorder_recursive { |e| puts "this is inorder #{e.data} recursive" }
+# p test.inorder_recursive
 
+test.inorder { |e| puts "this is inorder #{e.data} iteration" }
 p test.inorder
 
-test.level_order { |e| puts "this is level order #{e.data} iteration" }
-p test.level_order
+# test.level_order { |e| puts "this is level order #{e.data} iteration" }
+# p test.level_order
 
-test.level_order_rec { |e| puts "this is level order #{e.data} recursive" }
-p test.level_order_rec
+# test.level_order_recursive { |e| puts "this is level order #{e.data} recursive" }
+# p test.level_order_recursive
