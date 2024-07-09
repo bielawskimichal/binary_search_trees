@@ -85,21 +85,38 @@ class Tree
     end
   end
 
-  def level_order_recursive(node = @root, &block)
+  def inorder(node = @root, &block)
+    return [] if root.nil?
+
     if block_given?
       yield node
-      level_order_recursive(node.left, &block) if node.left
-      level_order_recursive(node.right, &block) if node.right
+      inorder(node.left, &block) if node.left
+      inorder(node.right, &block) if node.right
     else
       array = []
       array << node.data
-      level_order_recursive(node.left) { |node| array << node.data } if node.left
-      level_order_recursive(node.right) { |node| array << node.data } if node.right
+      inorder(node.left) { |node| array << node.data } if node.left
+      inorder(node.right) { |node| array << node.data } if node.right
       array
     end
   end
 
-  def level_order_iteration
+  def level_order_rec(queue = [@root], result = [], &block)
+    return [] if @root.nil?
+    return result if queue.empty? && !result.empty?
+    return if queue.empty?
+
+    node = queue.shift
+
+    block_given? ? yield(node) : result << node.data
+
+    queue << node.left if node.left
+    queue << node.right if node.right
+
+    level_order_rec(queue, result, &block)
+  end
+
+  def level_order
     return [] if @root.nil?
 
     queue = [@root]
