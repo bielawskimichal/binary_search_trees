@@ -35,6 +35,15 @@ class Tree
     end
   end
 
+  def length(it = 0, node = @root, &block)
+    return it if node.nil?
+
+    it += 1
+
+    it = length(it, node.left)
+    it = length(it, node.right)
+  end
+
   def delete(node, current_node = @root, tmp = nil, dir = nil)
     return node if current_node.nil?
 
@@ -48,11 +57,13 @@ class Tree
         current_node.data = nil
         dir.zero? ? tmp.left = nil : tmp.right = nil
       elsif current_node.has_right_child_only?
-        current_node.data = current_node.right.data
-        current_node.right = nil
+        tmp.right = current_node.right if dir == 1
+        tmp.left = current_node.right if dir == 0
+        current_node = nil
       elsif current_node.has_left_child_only?
-        current_node.data = current_node.left.data
-        current_node.left = nil
+        tmp.right = current_node.left if dir == 1
+        tmp.left = current_node.left if dir == 0
+        current_node = nil
       else
         c = current_node.right
         loop do
@@ -94,6 +105,25 @@ class Tree
     until queue.empty?
       node = queue.shift
 
+      queue.insert(0, node.left) if node.left
+      queue.insert(1, node) if node.left && node.right
+      queue.insert(1, node.right) if node.left && node.right
+
+      node = queue.shift
+
+      block_given? ? yield(node) : result << node.data
+    end
+  end
+
+  def preorder
+    return [] if @root.nil?
+
+    queue = [@root]
+    result = []
+
+    until queue.empty?
+      node = queue.shift
+
       block_given? ? yield(node) : result << node.data
 
       queue.insert(0, node.left) if node.left
@@ -104,7 +134,7 @@ class Tree
     result unless result.empty?
   end
 
-  def inorder_recursive(queue = [@root], result = [], &block)
+  def preorder_recursive(queue = [@root], result = [], &block)
     return [] if @root.nil?
     return result if queue.empty? && !result.empty?
     return if queue.empty?
@@ -114,10 +144,9 @@ class Tree
     block_given? ? yield(node) : result << node.data
 
     queue << node.left if node.left
-    inorder_recursive(queue, result, &block) unless queue.empty?
-
     queue << node.right if node.right
-    inorder_recursive(queue, result, &block)
+    preorder_recursive(queue, result, &block)
+    preorder_recursive(queue, result, &block)
   end
 
   def level_order_recursive(queue = [@root], result = [], &block)

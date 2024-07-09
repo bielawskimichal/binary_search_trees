@@ -14,18 +14,24 @@ test.insert(55)
 test.insert(55)
 test.insert(56)
 test.insert(234)
+test.insert(235)
+test.insert(238)
+test.insert(666)
 test.insert(4565)
-test.insert(54)
+test.insert(4564)
 test.delete(55)
+# test.insert(54)
+test.insert(55)
 test.pretty_print
-p test.find(55)
-p test.find(54)
+# p test.find(55)
+# p test.find(54)
+p test.length
 
-# test.inorder_recursive { |e| puts "this is inorder #{e.data} recursive" }
-# p test.inorder_recursive
+test.preorder_recursive { |e| puts "this is preorder #{e.data} recursive" }
+p test.preorder_recursive
 
-test.inorder { |e| puts "this is inorder #{e.data} iteration" }
-p test.inorder
+# test.preorder { |e| puts "this is preorder #{e.data} iteration" }
+# p test.preorder
 
 # test.level_order { |e| puts "this is level order #{e.data} iteration" }
 # p test.level_order
