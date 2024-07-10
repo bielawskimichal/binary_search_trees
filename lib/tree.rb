@@ -35,13 +35,13 @@ class Tree
     end
   end
 
-  def length(it = 0, node = @root, &block)
+  def size(it = 0, node = @root, &block)
     return it if node.nil?
 
     it += 1
 
-    it = length(it, node.left)
-    it = length(it, node.right)
+    it = size(it, node.left)
+    it = size(it, node.right)
   end
 
   def delete(node, current_node = @root, tmp = nil, dir = nil)
@@ -180,6 +180,31 @@ class Tree
     end
 
     result unless block_given?
+  end
+
+  def height(node, it = 0)
+    node = find(node)
+    return it if node.nil?
+
+    it += 1
+
+    if node.has_both_children? && size(0, node.left) > size(0, node.right)
+      it = height(node.left.data, it)
+    elsif node.right
+      it = height(node.right.data, it)
+    elsif node.left
+      it = height(node.right.data, it)
+    end
+    it
+  end
+
+  def depth(node, current = @root, it = 0)
+    return nil if find(node).nil?
+
+    it += 1
+    return it if node == current.data
+
+    node < current.data ? depth(node, current.left, it) : depth(node, current.right, it)
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)

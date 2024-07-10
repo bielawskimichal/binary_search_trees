@@ -25,10 +25,10 @@ test.insert(55)
 test.pretty_print
 # p test.find(55)
 # p test.find(54)
-p test.length
+p test.size
 
-test.preorder_recursive { |e| puts "this is preorder #{e.data} recursive" }
-p test.preorder_recursive
+# test.preorder_recursive { |e| puts "this is preorder #{e.data} recursive" }
+# p test.preorder_recursive
 
 # test.preorder { |e| puts "this is preorder #{e.data} iteration" }
 # p test.preorder
@@ -38,3 +38,6 @@ p test.preorder_recursive
 
 # test.level_order_recursive { |e| puts "this is level order #{e.data} recursive" }
 # p test.level_order_recursive
+
+p test.height(9)
+p test.depth(4564)
