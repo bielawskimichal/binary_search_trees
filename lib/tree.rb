@@ -193,7 +193,7 @@ class Tree
     elsif node.right
       it = height(node.right.data, it)
     elsif node.left
-      it = height(node.right.data, it)
+      it = height(node.left.data, it)
     end
     it
   end

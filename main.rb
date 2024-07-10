@@ -22,6 +22,10 @@ test.insert(4564)
 test.delete(55)
 # test.insert(54)
 test.insert(55)
+test.insert(52)
+test.insert(51)
+test.insert(50)
+test.insert(239)
 test.pretty_print
 # p test.find(55)
 # p test.find(54)
@@ -41,3 +45,5 @@ p test.size
 
 p test.height(9)
 p test.depth(4564)
+p test.height(56)
+p test.depth(56)
