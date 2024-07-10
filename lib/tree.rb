@@ -96,22 +96,18 @@ class Tree
     end
   end
 
-  def inorder
-    return [] if @root.nil?
+  def inorder(node = @root, result = [], &block)
+    return result if node.nil? && !result.empty?
+    return nil if node.nil?
 
-    queue = [@root]
-    result = []
-
-    until queue.empty?
-      node = queue.shift
-
-      queue.insert(0, node.left) if node.left
-      queue.insert(1, node) if node.left && node.right
-      queue.insert(1, node.right) if node.left && node.right
-
-      node = queue.shift
-
-      block_given? ? yield(node) : result << node.data
+    if block_given?
+      inorder(node.left, result, &block)
+      yield(node)
+      inorder(node.right, result, &block)
+    else
+      inorder(node.left, result) { |n| result << n.data }
+      result << node.data
+      inorder(node.right, result) { |n| result << n.data }
     end
   end
 
@@ -134,19 +130,20 @@ class Tree
     result unless result.empty?
   end
 
-  def preorder_recursive(queue = [@root], result = [], &block)
+  def preorder_recursive(node = @root, result = [], &block)
     return [] if @root.nil?
-    return result if queue.empty? && !result.empty?
-    return if queue.empty?
+    return result if node.nil? && !result.empty?
+    return if node.nil?
 
-    node = queue.shift
-
-    block_given? ? yield(node) : result << node.data
-
-    queue << node.left if node.left
-    queue << node.right if node.right
-    preorder_recursive(queue, result, &block)
-    preorder_recursive(queue, result, &block)
+    if block_given?
+      yield(node)
+      preorder_recursive(node.left, result, &block) if block_given?
+      preorder_recursive(node.right, result, &block) if block_given?
+    else
+      result << node.data
+      preorder_recursive(node.left, result) { |n| result << n.data }
+      preorder_recursive(node.right, result) { |n| result << n.data }
+    end
   end
 
   def level_order_recursive(queue = [@root], result = [], &block)
