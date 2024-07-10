@@ -38,11 +38,8 @@ test.pretty_print
 # test.preorder { |e| puts "this is preorder #{e.data} iteration" }
 # p test.preorder
 
-# test.inorder { |e| puts "this is inorder #{e.data} recursive" }
-# p test.inorder
-
-# test.inorder { |e| puts "this is inorder #{e.data} iteration" }
-# p test.inorder
+test.inorder { |e| puts "this is inorder #{e.data} recursive" }
+p test.inorder
 
 # test.level_order { |e| puts "this is level order #{e.data} iteration" }
 # p test.level_order
@@ -60,6 +57,6 @@ test.pretty_print
 
 # test.postorder { |e| puts "this is postorder #{e.data} recursive" }
 # p test.postorder
-p test.balanced?
-test.rebalance
-p test.balanced?
+# p test.balanced?
+# test.rebalance
+# p test.balanced?
