@@ -96,14 +96,16 @@ class Tree
     end
   end
 
-  # def balanced?
-  #   size(0, @root.left) - size(0, @root.right) == (-1..1)
-  # end
+  def balanced?
+    (-1..1).include?(height(@root.left.data) - height(@root.right.data))
+  end
 
-  # def rebalance
-  #   new_array = inorder
-  #   build_tree(new_array, 0, new_array.length - 1)
-  # end
+  def rebalance
+    return if balanced?
+
+    array = inorder
+    @root = build_tree(array, 0, array.length - 1)
+  end
 
   def inorder(node = @root, result = [], &block)
     return result if node.nil? && !result.empty?
