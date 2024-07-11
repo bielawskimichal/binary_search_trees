@@ -122,6 +122,21 @@ class Tree
     end
   end
 
+  def postorder(node = @root, result = [], &block)
+    return result if node.nil? && !result.empty?
+    return nil if node.nil?
+
+    if block_given?
+      postorder(node.left, result, &block)
+      postorder(node.right, result, &block)
+      yield(node)
+    else
+      postorder(node.left, result) { |n| result << n.data }
+      postorder(node.right, result) { |n| result << n.data }
+      result << node.data
+    end
+  end
+
   def preorder
     return [] if @root.nil?
 

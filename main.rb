@@ -19,3 +19,5 @@ puts test.balanced?
 test.rebalance
 puts test.balanced?
 test.pretty_print
+
+p test.postorder
